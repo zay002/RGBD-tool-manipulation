@@ -24,6 +24,11 @@ server = [
   "torchvision",
   "ultralytics",
 ]
+dataset = [
+  "h5py",
+  "trimesh",
+  "torch",
+]
 client = [
   "opencv-python",
   "open3d",

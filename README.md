@@ -27,6 +27,8 @@ configuration files.
 | `src/sim_pipeline/completion_inference` | Completion interface plus a deterministic geometric fallback for contract testing. |
 | `src/sim_pipeline/grasp_generation` | Parallel-jaw grasp candidate representation and geometric candidate generator. |
 | `src/sim_pipeline/grasp_scoring` | Clearance and collision-style scoring utilities for grasp ranking. |
+| `src/tool_dataset/build_tool_mesh_dataset.py` | Source code for building object-centric completion and binary affordance-segmentation samples from licensed tool meshes. |
+| `src/tool_dataset/train_affordance_segmentation.py` | Point-cloud affordance segmentation training code with MLP, PointNet, PointNet++-lite, DGCNN, and DGCNN-PartSeg-style models. |
 | `src/real_robot/realsense_capture.py` | RGB-D capture, depth visualization, request-folder serialization, and point-cloud export. |
 | `src/real_robot/transfer.py` | SSH/SCP request and result transfer commands between client host and inference server. |
 | `src/real_robot/aubo_adapter.py` | Robot and gripper adapter with explicit safety gates for hardware-changing actions. |
@@ -70,7 +72,16 @@ Install role-specific dependencies when needed:
 python -m pip install -r requirements/server.txt   # GPU inference host
 python -m pip install -r requirements/client.txt   # RGB-D and transfer host
 python -m pip install -r requirements/hardware.txt # RealSense runtime
+python -m pip install -r requirements/dataset.txt  # mesh dataset generation and segmentation training
 ```
+
+## Dataset Generation Code
+
+`src/tool_dataset` contains the source code for creating an object-centric tool
+dataset from user-supplied meshes. The builder samples complete object clouds,
+creates cropped single-object partial observations, and exports binary handle
+affordance labels from part meshes. Raw meshes, generated datasets, and
+checkpoints are intentionally not included.
 
 ## Deployment Split
 

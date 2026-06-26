@@ -8,6 +8,9 @@ redistributing private datasets, checkpoints, or hardware logs.
 - Python source for RGB-D request creation, point-cloud conversion, geometric
   fallback completion, grasp-candidate generation, scoring, and client/server
   transfer.
+- Source code for building an object-centric tool completion and affordance
+  segmentation dataset from user-supplied meshes, plus point-cloud affordance
+  segmentation training code.
 - Client-side adapters for a robot controller, digital-output gripper control,
   RealSense RGB-D capture, hand-eye records, and guarded hardware actions.
 - A server-side inference entry point plus adapter scripts for detector,
@@ -27,6 +30,9 @@ redistributing private datasets, checkpoints, or hardware logs.
 - Licensed robot, gripper, and tool meshes for high-fidelity simulation.
 - Camera calibration and robot hand-eye calibration.
 - Training datasets and physical robot logs.
+- Raw tool meshes and generated dataset files. The generation code is included,
+  but users must supply meshes with compatible complete-object and handle-part
+  files.
 
 ## Verification Levels
 
@@ -42,13 +48,21 @@ redistributing private datasets, checkpoints, or hardware logs.
    PYTHONPATH="$PWD/src" python scripts/run_pipeline_check.py --out-dir outputs/pipeline_check
    ```
 
-3. Client environment check:
+3. Dataset code environment check:
+
+   ```bash
+   python -m pip install -r requirements/dataset.txt
+   python src/tool_dataset/build_tool_mesh_dataset.py --help
+   python src/tool_dataset/train_affordance_segmentation.py --help
+   ```
+
+4. Client environment check:
 
    ```bash
    python scripts/run_real_robot_client.py check-env
    ```
 
-4. Completion and affordance contract:
+5. Completion and affordance contract:
 
    ```bash
    python scripts/run_completion_affordance.py \
@@ -57,7 +71,7 @@ redistributing private datasets, checkpoints, or hardware logs.
      --out-dir outputs/completion_contract
    ```
 
-5. Server request processing:
+6. Server request processing:
 
    ```bash
    PYTHONPATH="$PWD/src" python scripts/run_server_inference.py \
@@ -65,7 +79,7 @@ redistributing private datasets, checkpoints, or hardware logs.
      /path/to/result_dir
    ```
 
-6. Hardware execution:
+7. Hardware execution:
 
    Hardware-changing commands must be run only after calibration, workspace
    checks, and emergency-stop access have been verified.

@@ -1,0 +1,44 @@
+[project]
+name = "modular-tool-manipulation"
+version = "0.1.0"
+description = "An anonymized source-only RGB-D tool manipulation pipeline."
+requires-python = ">=3.10"
+dependencies = [
+  "numpy",
+  "scipy",
+  "pillow",
+]
+
+[project.optional-dependencies]
+vision = [
+  "opencv-python",
+  "ultralytics",
+]
+pointcloud = [
+  "open3d",
+]
+server = [
+  "opencv-python",
+  "pillow",
+  "torch",
+  "torchvision",
+  "ultralytics",
+]
+client = [
+  "opencv-python",
+  "open3d",
+  "paramiko",
+]
+hardware = [
+  "pyrealsense2",
+]
+dev = [
+  "pytest",
+  "ruff",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

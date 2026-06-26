@@ -1,0 +1,44 @@
+runtime:
+  client_role: robot_camera_hub
+  server_role: perception_and_geometry_inference
+
+paths:
+  request_inbox: outputs/real_robot/inbox
+  result_outbox: outputs/real_robot/outbox
+  local_run_root: ${HOME}/tool_manipulation_runs
+
+modules:
+  detector:
+    type: open_vocabulary_detector
+    replaceable: true
+  mask:
+    type: promptable_image_segmenter
+    replaceable: true
+  depth_lift:
+    implementation: sim_pipeline.mask_depth_fusion.depth_to_cloud
+  completion:
+    type: point_cloud_completion
+    replaceable: true
+    fallback: sim_pipeline.completion_inference.geometric_fallback
+  affordance_segmentation:
+    type: point_cloud_part_segmentation
+    replaceable: true
+  grasp_generation:
+    type: contact_grasp_generator
+    replaceable: true
+    fallback: sim_pipeline.grasp_generation.geometric_parallel_jaw
+  ranking:
+    type: affordance_and_clearance_ranking
+    replaceable: true
+  planning:
+    type: robot_client_safety_checks
+    replaceable: true
+
+gates:
+  min_mask_area_px: 200
+  min_depth_points: 128
+  require_completion_finite: true
+  require_affordance_component: true
+  require_feasible_grasp: true
+  require_client_safety_checks: true
+

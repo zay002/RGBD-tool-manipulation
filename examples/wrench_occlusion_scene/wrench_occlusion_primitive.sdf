@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+  <world name="primitive_wrench_occlusion">
+    <physics name="default_physics" type="ignored">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+    <plugin filename="ignition-gazebo-physics-system" name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="ignition-gazebo-scene-broadcaster-system" name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <light name="key_light" type="directional">
+      <pose>0 0 3 0.4 0.2 -0.7</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.4 0.3 -0.85</direction>
+    </light>
+
+    <model name="work_table">
+      <static>true</static>
+      <pose>0.45 -0.12 0.38 0 0 0</pose>
+      <link name="table_link">
+        <collision name="collision"><geometry><box><size>1.2 0.8 0.05</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>1.2 0.8 0.05</size></box></geometry>
+          <material><ambient>0.45 0.30 0.13 1</ambient><diffuse>0.52 0.35 0.16 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="simplified_robot_and_gripper">
+      <static>true</static>
+      <pose>-0.15 -0.03 0.42 0 0 0</pose>
+      <link name="base"><visual name="v"><geometry><cylinder><radius>0.09</radius><length>0.08</length></cylinder></geometry><material><diffuse>0.65 0.68 0.72 1</diffuse></material></visual></link>
+      <link name="upper_arm"><pose>0.18 -0.05 0.22 0 1.05 -0.2</pose><visual name="v"><geometry><box><size>0.34 0.07 0.07</size></box></geometry><material><diffuse>0.70 0.74 0.80 1</diffuse></material></visual></link>
+      <link name="forearm"><pose>0.45 -0.10 0.15 0 0.55 -0.15</pose><visual name="v"><geometry><box><size>0.32 0.06 0.06</size></box></geometry><material><diffuse>0.70 0.74 0.80 1</diffuse></material></visual></link>
+      <link name="wrist"><pose>0.62 -0.16 0.12 0 0.2 -0.55</pose><visual name="v"><geometry><cylinder><radius>0.045</radius><length>0.08</length></cylinder></geometry><material><diffuse>0.18 0.20 0.24 1</diffuse></material></visual></link>
+      <link name="left_finger"><pose>0.69 -0.21 0.03 0.15 0.4 -0.65</pose><visual name="v"><geometry><box><size>0.025 0.12 0.025</size></box></geometry><material><diffuse>0.05 0.05 0.06 1</diffuse></material></visual></link>
+      <link name="right_finger"><pose>0.58 -0.11 0.03 -0.15 0.4 -0.65</pose><visual name="v"><geometry><box><size>0.025 0.12 0.025</size></box></geometry><material><diffuse>0.05 0.05 0.06 1</diffuse></material></visual></link>
+    </model>
+
+    <model name="target_wrench_primitive">
+      <static>false</static>
+      <pose>0.45 -0.11 0.43 0 0 0.36</pose>
+      <link name="handle">
+        <collision name="c"><geometry><box><size>0.34 0.045 0.018</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.34 0.045 0.018</size></box></geometry><material><diffuse>0.55 0.58 0.62 1</diffuse></material></visual>
+      </link>
+      <link name="head">
+        <pose>0.19 0 0 0 0 0</pose>
+        <collision name="c"><geometry><cylinder><radius>0.065</radius><length>0.020</length></cylinder></geometry></collision>
+        <visual name="v"><geometry><cylinder><radius>0.065</radius><length>0.020</length></cylinder></geometry><material><diffuse>0.58 0.60 0.63 1</diffuse></material></visual>
+      </link>
+    </model>
+
+    <model name="small_screwdriver"><static>false</static><pose>0.39 -0.21 0.43 0 0 1.2</pose><link name="link"><collision name="c"><geometry><box><size>0.25 0.026 0.018</size></box></geometry></collision><visual name="v"><geometry><box><size>0.25 0.026 0.018</size></box></geometry><material><diffuse>0.12 0.23 0.70 1</diffuse></material></visual></link></model>
+    <model name="socket_block"><static>false</static><pose>0.53 -0.04 0.43 0 0 -0.2</pose><link name="link"><collision name="c"><geometry><box><size>0.08 0.08 0.035</size></box></geometry></collision><visual name="v"><geometry><box><size>0.08 0.08 0.035</size></box></geometry><material><diffuse>0.25 0.25 0.26 1</diffuse></material></visual></link></model>
+    <model name="nut_cluster"><static>false</static><pose>0.34 -0.05 0.43 0 0 0.4</pose><link name="link"><collision name="c"><geometry><cylinder><radius>0.035</radius><length>0.025</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.035</radius><length>0.025</length></cylinder></geometry><material><diffuse>0.75 0.65 0.45 1</diffuse></material></visual></link></model>
+    <model name="occluding_rod"><static>false</static><pose>0.47 -0.12 0.46 0 1.5708 -0.85</pose><link name="link"><collision name="c"><geometry><cylinder><radius>0.018</radius><length>0.20</length></cylinder></geometry></collision><visual name="v"><geometry><cylinder><radius>0.018</radius><length>0.20</length></cylinder></geometry><material><diffuse>0.15 0.15 0.15 1</diffuse></material></visual></link></model>
+
+    <model name="wrist_rgb_camera">
+      <static>true</static>
+      <pose>0.58 -0.17 0.92 0 1.20 -0.45</pose>
+      <link name="camera_link">
+        <sensor name="rgb" type="camera">
+          <topic>/wrist/rgb</topic>
+          <update_rate>15</update_rate>
+          <camera><horizontal_fov>1.10</horizontal_fov><image><width>640</width><height>480</height></image><clip><near>0.05</near><far>3.0</far></clip></camera>
+        </sensor>
+        <sensor name="depth" type="depth_camera">
+          <topic>/wrist/depth</topic>
+          <update_rate>15</update_rate>
+          <camera><horizontal_fov>1.10</horizontal_fov><image><width>640</width><height>480</height></image><clip><near>0.05</near><far>3.0</far></clip></camera>
+        </sensor>
+      </link>
+    </model>
+  </world>
+</sdf>
+

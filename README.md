@@ -1,4 +1,4 @@
-# Modular Object-Centric Tool Manipulation
+# Robot Grasping of Occluded Industrial Tools Based on Gated Object-Centric Completion and Affordance Guidance
 
 This repository is an anonymized, source-only release for an object-centric
 RGB-D manipulation pipeline. The code is organized so that each module can be
